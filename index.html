@@ -12,6 +12,87 @@
 </head>
 
 <body>
+
+    <div class="dynamic-text">
+        <span id="text-runner">Memuat...</span>
+    </div>
+
+    <style>
+        .dynamic-text {
+            width: 100%;
+            overflow: hidden;
+            background: #111;
+            color: white;
+            font-size: 1.2rem;
+            white-space: nowrap;
+            box-sizing: border-box;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        .dynamic-text span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: slideLeft 15s linear infinite;
+        }
+
+        @keyframes slideLeft {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        @keyframes slideRight {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(100%);
+            }
+        }
+    </style>
+
+    <script>
+        const texts = [
+            "⏰ Selamat datang di Aplikasi Jam Digital & Analog",
+            "🕒 Waktu adalah Kehidupan – Gunakan Waktumu dengan Bijak",
+            "📱 Dibuat oleh Dimas Awaludin – Versi Android (PWA)",
+            "🌞🌙 Mode Siang dan Malam aktif otomatis",
+            "🙏 Terima kasih telah menggunakan aplikasi ini dan selamat menikmati"
+        ];
+
+        const colors = ["#ff4444", "#44ff44", "#4488ff", "#ffff44", "#ff66ff"];
+
+        let index = 0;
+        let direction = "left";
+        const span = document.getElementById("text-runner");
+
+        function updateText() {
+            span.textContent = texts[index];
+            span.style.color = colors[index % colors.length];
+
+            // ganti arah animasi setiap kali teks berganti
+            span.style.animation = "none"; // reset animasi
+            void span.offsetWidth; // trik supaya animasi bisa restart
+            span.style.animation = (direction === "left" ? "slideLeft" : "slideRight") + " 15s linear infinite";
+
+            // update index & arah
+            index = (index + 1) % texts.length;
+            direction = (direction === "left") ? "right" : "left";
+        }
+
+        // mulai pertama kali
+        updateText();
+
+        // ganti teks setiap 16 detik
+        setInterval(updateText, 16000);
+    </script>
+
     <div class="container">
         <div class="clock-digital" id="digital-clock">00:00:00</div>
 
