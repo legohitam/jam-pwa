@@ -1,0 +1,78 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    transition: background 0.5s, color 0.5s;
+    background: #0f172a;
+    color: white;
+}
+
+body.day {
+    background: #e0f7fa;
+    color: #1e293b;
+}
+
+.container {
+    text-align: center;
+}
+
+.clock-digital {
+    font-size: 3em;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.clock-analog {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    border: 8px solid currentColor;
+    border-radius: 50%;
+}
+
+.hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    transform: translateX(-50%) rotate(0deg);
+    background: currentColor;
+}
+
+.hour {
+    width: 6px;
+    height: 70px;
+}
+
+.minute {
+    width: 4px;
+    height: 100px;
+}
+
+.second {
+    width: 2px;
+    height: 130px;
+    background: red;
+}
+
+.center-dot {
+    width: 14px;
+    height: 14px;
+    background: currentColor;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    transform: translate(-50%, 50%);
+}
+
+.number {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    font-size: 1.2em;
+    font-weight: bold;
+}

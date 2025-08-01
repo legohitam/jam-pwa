@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jam Digital & Analog</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon.png">
+    <script defer src="script.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="clock-digital" id="digital-clock">00:00:00</div>
+
+        <div class="clock-analog" id="analog-clock">
+            <div class="hand hour" id="hour-hand"></div>
+            <div class="hand minute" id="minute-hand"></div>
+            <div class="hand second" id="second-hand"></div>
+            <div class="center-dot"></div>
+        </div>
+    </div>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+</body>
+
+</html>
