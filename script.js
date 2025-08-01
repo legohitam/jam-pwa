@@ -1,44 +1,54 @@
-const digitalClock = document.getElementById('digital-clock');
-const hourHand = document.getElementById('hour-hand');
-const minuteHand = document.getElementById('minute-hand');
-const secondHand = document.getElementById('second-hand');
-const clockFace = document.getElementById('analog-clock');
-
-// Buat angka 1–12
-for (let i = 1; i <= 12; i++) {
-    const number = document.createElement('div');
-    number.className = 'number';
-    number.textContent = i;
-
-    const angle = (i - 3) * 30 * (Math.PI / 180); // mulai dari atas
-    const radius = 130;
-
-    const x = 150 + radius * Math.cos(angle); // centerX = 150
-    const y = 150 + radius * Math.sin(angle); // centerY = 150
-
-    number.style.left = `${x}px`;
-    number.style.top = `${y}px`;
-
-    clockFace.appendChild(number);
-}
-
 function updateClock() {
     const now = new Date();
-    const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-    const wib = new Date(utc + 7 * 3600000);
-
-    const h = wib.getHours();
-    const m = wib.getMinutes();
-    const s = wib.getSeconds();
-
-    digitalClock.textContent = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-
-    hourHand.style.transform = `translateX(-50%) rotate(${(h % 12 + m / 60) * 30}deg)`;
-    minuteHand.style.transform = `translateX(-50%) rotate(${m * 6}deg)`;
-    secondHand.style.transform = `translateX(-50%) rotate(${s * 6}deg)`;
-
-    document.body.className = (h >= 6 && h < 18) ? 'day' : '';
+    document.getElementById("digital-clock").textContent = now.toLocaleTimeString();
+    drawAnalogClock(now);
 }
+function drawAnalogClock(now) {
+    const canvas = document.getElementById("analog-clock");
+    const ctx = canvas.getContext("2d");
+    const r = canvas.width / 2;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.translate(r, r);
 
+    // Lingkaran
+    ctx.beginPath();
+    ctx.arc(0, 0, r - 5, 0, 2 * Math.PI);
+    ctx.stroke();
+
+    // Jam
+    const hour = now.getHours() % 12;
+    const minute = now.getMinutes();
+    const second = now.getSeconds();
+
+    // Jarum jam
+    ctx.rotate((hour + minute / 60) * Math.PI / 6);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, -r + 60);
+    ctx.stroke();
+    ctx.rotate(-(hour + minute / 60) * Math.PI / 6);
+
+    // Jarum menit
+    ctx.rotate(minute * Math.PI / 30);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, -r + 40);
+    ctx.stroke();
+    ctx.rotate(-minute * Math.PI / 30);
+
+    // Jarum detik
+    ctx.strokeStyle = "red";
+    ctx.rotate(second * Math.PI / 30);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, -r + 20);
+    ctx.stroke();
+    ctx.rotate(-second * Math.PI / 30);
+
+    ctx.translate(-r, -r);
+}
+document.getElementById("mode-toggle").addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+});
 setInterval(updateClock, 1000);
 updateClock();
