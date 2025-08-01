@@ -2,7 +2,9 @@ function updateClock() {
     const now = new Date();
     document.getElementById("digital-clock").textContent = now.toLocaleTimeString();
     drawAnalogClock(now);
+    autoTheme(now);
 }
+
 function drawAnalogClock(now) {
     const canvas = document.getElementById("analog-clock");
     const ctx = canvas.getContext("2d");
@@ -47,8 +49,22 @@ function drawAnalogClock(now) {
 
     ctx.translate(-r, -r);
 }
+
+function autoTheme(now) {
+    const hour = now.getHours();
+    const isNight = hour >= 18 || hour < 6;
+
+    if (isNight) {
+        document.body.classList.add("dark");
+    } else {
+        document.body.classList.remove("dark");
+    }
+}
+
+// Tombol toggle manual (opsional)
 document.getElementById("mode-toggle").addEventListener("click", () => {
     document.body.classList.toggle("dark");
 });
+
 setInterval(updateClock, 1000);
 updateClock();
