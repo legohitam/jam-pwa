@@ -52,3 +52,21 @@ canvas {
         transform: translateX(-100%);
     }
 }
+.marquee-text {
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+  color: #00ffe1;
+  font-weight: bold;
+  font-size: 1.2rem;
+  animation: scrollText 15s linear infinite;
+}
+
+@keyframes scrollText {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
