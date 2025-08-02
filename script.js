@@ -68,3 +68,24 @@ document.getElementById("mode-toggle").addEventListener("click", () => {
 
 setInterval(updateClock, 1000);
 updateClock();
+const clockFace = document.getElementById("clock-face");
+
+// Tambahkan angka 1 sampai 12 di jam
+for (let i = 1; i <= 12; i++) {
+    const number = document.createElement('div');
+    number.className = 'number';
+    number.textContent = i;
+
+    const angle = (i - 3) * 30 * (Math.PI / 180); // posisi jam
+    const radius = 130;
+    const centerX = 150;
+    const centerY = 150;
+
+    const x = centerX + radius * Math.cos(angle);
+    const y = centerY + radius * Math.sin(angle);
+
+    number.style.left = `${x}px`;
+    number.style.top = `${y}px`;
+
+    clockFace.appendChild(number);
+}
